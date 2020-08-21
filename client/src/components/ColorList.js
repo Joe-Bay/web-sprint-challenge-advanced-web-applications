@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import {axiosWithAuth} from '../utils/axiosWithAuth'
+import { useHistory, useParams } from 'react-router-dom'
 
 const initialColor = {
   color: "",
@@ -7,9 +9,10 @@ const initialColor = {
 };
 
 const ColorList = ({ colors, updateColors }) => {
-  console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
+  const history = useHistory()
+  const { id } = useParams()
 
   const editColor = color => {
     setEditing(true);
@@ -21,6 +24,23 @@ const ColorList = ({ colors, updateColors }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
+    axiosWithAuth()
+    .put(`/api/colors/${id}`, colorToEdit)
+    .then(res => {
+      console.log(res)
+      const newArr = colors.map(color => {
+        if(color.id === res.data.id) {
+          return res.data
+        } else {
+          return color
+        }
+      })
+      updateColors(newArr)
+    })
+
+    .catch( err => console.log(err))
+
+
   };
 
   const deleteColor = color => {
