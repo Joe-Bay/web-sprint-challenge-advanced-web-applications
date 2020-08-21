@@ -11,8 +11,9 @@ const initialColor = {
 const ColorList = ({ colors, updateColors }) => {
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
-  const history = useHistory()
-  const { id } = useParams()
+  console.log(colors)
+  // const { id } = useParams()
+
 
   const editColor = color => {
     setEditing(true);
@@ -25,7 +26,7 @@ const ColorList = ({ colors, updateColors }) => {
     // think about where will you get the id from...
     // where is is saved right now?
     axiosWithAuth()
-    .put(`/api/colors/${id}`, colorToEdit)
+    .put(`/api/colors/${colors.id}`, colorToEdit)
     .then(res => {
       console.log(res)
       const newArr = colors.map(color => {
