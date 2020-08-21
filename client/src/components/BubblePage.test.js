@@ -89,9 +89,14 @@ test("Fetches data and renders the bubbles", () => {
 
   render(<BubblePage />)
 
-  const { rerender } = render(<Bubbles colors={[]} />)
+  const { rerender } = render(<ColorList colors={[]} />)
 
-  const bubbles = screen.findByTestId(/bubbles-test/i)
+  let bubbles = screen.queryAllByTestId(/color-list/i)
+  expect(bubbles).toHaveLength(0)
+  rerender(<ColorList colors={bubbleData} />)
+  bubbles = screen.getAllByTestId(/color-list/i)
+  expect(bubbles).toHaveLength(9)
+  
 
   
 

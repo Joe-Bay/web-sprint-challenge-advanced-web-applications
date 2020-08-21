@@ -15,8 +15,8 @@ const Bubbles = ({ colors }) => {
   return (
     <div className="bubble-wrap">
       <p>bubbles</p>
-      <Svg data-testid='bubbles-test' width={400} height={400}>
-        <Pack
+      <Svg width={400} height={400}>
+        <Pack 
           data={{
             children: bubbleData
           }}
@@ -31,7 +31,7 @@ const Bubbles = ({ colors }) => {
               .map(({ x, y, r, key }, i) => {
                 if (i < colors.length) {
                   return (
-                    <Circle
+                    <Circle data-testid='bubbles-test'
                       key={key}
                       cx={x}
                       cy={y}
