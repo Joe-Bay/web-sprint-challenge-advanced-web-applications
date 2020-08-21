@@ -1,5 +1,5 @@
 import React , {useEffect} from "react";
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import { render, screen} from "@testing-library/react";
 import BubblePage from "./BubblePage";
 // import fetchBubbles from '../api/fetchBubbles'
 import ColorList from './ColorList'
@@ -7,17 +7,16 @@ import Bubbles from './Bubbles'
 import Login from './Login'
 import axiosWithAuth from '../utils/axiosWithAuth'
 
-const fetchBubbles = () => {
-    axiosWithAuth()
-  .get('/api/colors')
-  .then(res => console.log(res))
-  .catch(err => console.log(err))
-  return res
-}
+// const fetchBubbles = () => {
+//     axiosWithAuth()
+//   .get('/api/colors')
+//   .then(res => console.log(res))
+//   .catch(err => console.log(err))
+//   return res
+// }
 
-jest.mock(getBubbles)
-const bubbleData = {
-    data:[
+// jest.mock(getBubbles)
+const bubbleData = [
   {
     color: 'aliceblue',
     code: {
@@ -82,21 +81,17 @@ const bubbleData = {
     id: 11
   }
 ]
-}
 
 
-test("Fetches data and renders the bubbles", async () => {
+
+test("Fetches data and renders the bubbles", () => {
   // Finish this test
-  fetchBubbles.mockResolvedValueOnce(bubbleData)
+
   render(<BubblePage />)
 
+  const { rerender } = render(<Bubbles colors={[]} />)
 
-  const blue = await screen.findByText(/blue/i)
-  fireEvent.click(blue)
-  const aliceblue = screen.findByText(/aliceblue/i)
-  const lilac = screen.findByText(/lilac/i)
   const bubbles = screen.findByTestId(/bubbles-test/i)
-  expect(await bubbles).toBeInTheDocument()
 
   
 
